@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Build output
+dist/
+
+# Downloads (user-generated content)
+downloads/
+
+# Sensitive config (contains Spotify API keys)
+config.json
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs
+*.log
+
+# Editor
+.vscode/
+.idea/
+
+# Bun
+bun.lockb
+
+# Backup files
+*.bak
+
+# Schedules (user-specific state)
+schedules.json
