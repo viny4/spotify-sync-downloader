@@ -177,6 +177,12 @@ const server = Bun.serve({
         if (!spotifyUrl) {
           return jsonResponse({ success: false, error: "Spotify URL is required" }, 400);
         }
+        const isValidSpotifyUrl = /^(https?:\/\/)?(open\.spotify\.com\/(playlist|album|track)\/[A-Za-z0-9]+|spotify:(playlist|album|track):[A-Za-z0-9]+)$/i.test(
+          spotifyUrl.split("?")[0].replace(/\/+$/, "")
+        );
+        if (!isValidSpotifyUrl) {
+          return jsonResponse({ success: false, error: "Please provide a valid Spotify playlist, album, or track URL." }, 400);
+        }
         const info = await fetchSpotifyInfo(spotifyUrl);
         return jsonResponse({ success: true, info });
       } catch (err: any) {
@@ -188,11 +194,15 @@ const server = Bun.serve({
     if (pathname === "/api/download-tracks" && req.method === "POST") {
       try {
         const body = (await req.json()) as any;
-        const tracks = body.tracks || [];
-        const quality = parseInt(body.quality || "320", 10);
+        const tracks = Array.isArray(body.tracks) ? body.tracks : [];
+        const quality = Number.parseInt(String(body.quality || "320"), 10);
 
         if (!Array.isArray(tracks) || tracks.length === 0) {
           return jsonResponse({ success: false, error: "No tracks provided" }, 400);
+        }
+
+        if (!Number.isFinite(quality) || quality < 128 || quality > 320) {
+          return jsonResponse({ success: false, error: "Quality must be a valid bitrate between 128 and 320 kbps." }, 400);
         }
 
         // Initialize queue entries
@@ -251,8 +261,11 @@ const server = Bun.serve({
     if (pathname === "/api/save-config" && req.method === "POST") {
       try {
         const body = (await req.json()) as any;
-        const clientId = (body.client_id || "").trim();
-        const clientSecret = (body.client_secret || "").trim();
+        const clientId = String(body.client_id || "").trim();
+        const clientSecret = String(body.client_secret || "").trim();
+        if (!clientId || !clientSecret) {
+          return jsonResponse({ success: false, error: "Both Client ID and Client Secret are required." }, 400);
+        }
         fs.writeFileSync(
           CONFIG_FILE,
           JSON.stringify({ spotify_client_id: clientId, spotify_client_secret: clientSecret }, null, 2),

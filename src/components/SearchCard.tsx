@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link2, Sparkles, SlidersHorizontal, ArrowRight } from "lucide-react";
+import { normalizeQuality, sanitizeSpotifyUrl } from "../lib/validation.js";
 
 interface SearchCardProps {
   onFetch: (url: string, quality: number) => Promise<void>;
@@ -10,17 +11,21 @@ export const SearchCard: React.FC<SearchCardProps> = ({ onFetch, isLoading }) =>
   const [url, setUrl] = useState("");
   const [quality, setQuality] = useState(320);
 
+  const sanitizedUrl = sanitizeSpotifyUrl(url);
+  const validUrl = Boolean(sanitizedUrl);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!url.trim()) return;
-    onFetch(url.trim(), quality);
+    if (!validUrl) return;
+    onFetch(sanitizedUrl, normalizeQuality(quality, 320));
   };
 
   const handlePaste = async () => {
     try {
       const text = await navigator.clipboard.readText();
-      if (text && text.includes("spotify.com")) {
-        setUrl(text.trim());
+      const cleaned = sanitizeSpotifyUrl(text);
+      if (cleaned) {
+        setUrl(cleaned);
       }
     } catch {}
   };
@@ -85,6 +90,7 @@ export const SearchCard: React.FC<SearchCardProps> = ({ onFetch, isLoading }) =>
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="https://open.spotify.com/playlist/... or album/..."
+              aria-invalid={!validUrl && url.length > 0}
               required
               style={{
                 background: "transparent",
@@ -159,13 +165,14 @@ export const SearchCard: React.FC<SearchCardProps> = ({ onFetch, isLoading }) =>
               <option value="320" style={{ background: "#0f1422" }}>320 kbps (Extreme)</option>
               <option value="256" style={{ background: "#0f1422" }}>256 kbps (High)</option>
               <option value="192" style={{ background: "#0f1422" }}>192 kbps (Standard)</option>
+              <option value="128" style={{ background: "#0f1422" }}>128 kbps (Compact)</option>
             </select>
           </div>
 
           {/* Fetch Button */}
           <button
             type="submit"
-            disabled={isLoading || !url.trim()}
+            disabled={isLoading || !validUrl}
             className="btn btn-primary"
             style={{ padding: "12px 22px", height: "45px" }}
           >
