@@ -47,7 +47,9 @@ export function fetchSpotifyInfo(url: string): Promise<any> {
           reject(new Error(parsed.error || "Failed to fetch Spotify information"));
         }
       } catch (err: any) {
-        reject(new Error(`Failed to parse response: ${err.message}. Raw output: ${stdout.slice(0, 300)}`));
+        reject(
+          new Error(`Failed to parse response: ${err.message}. Raw output: ${stdout.slice(0, 300)}`)
+        );
       }
     });
   });
@@ -65,12 +67,24 @@ export function startDownloadProcess(
     if (!fs.existsSync(tempDir)) {
       fs.mkdirSync(tempDir, { recursive: true });
     }
-    const tempFile = path.join(tempDir, `batch_${Date.now()}_${Math.random().toString(36).substring(7)}.json`);
+    const tempFile = path.join(
+      tempDir,
+      `batch_${Date.now()}_${Math.random().toString(36).substring(7)}.json`
+    );
     fs.writeFileSync(tempFile, JSON.stringify(tracks), "utf-8");
 
     const proc = spawn(
       PYTHON_BIN,
-      [BRIDGE_SCRIPT, "download-tracks", "--tracks", tempFile, "--quality", quality.toString(), "--output", outputDir],
+      [
+        BRIDGE_SCRIPT,
+        "download-tracks",
+        "--tracks",
+        tempFile,
+        "--quality",
+        quality.toString(),
+        "--output",
+        outputDir,
+      ],
       { cwd: PROJECT_ROOT }
     );
 
@@ -102,8 +116,12 @@ export function startDownloadProcess(
     proc.on("close", (code) => {
       // Clean up temp file
       try {
-        if (fs.existsSync(tempFile)) fs.unlinkSync(tempFile);
-      } catch {}
+        if (fs.existsSync(tempFile)) {
+          fs.unlinkSync(tempFile);
+        }
+      } catch (cleanupError) {
+        console.warn("Failed to clean up temp download file:", cleanupError);
+      }
 
       if (code === 0) {
         resolve();

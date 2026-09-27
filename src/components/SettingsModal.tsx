@@ -66,7 +66,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "16px",
+          }}
+        >
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <KeyRound size={20} style={{ color: "var(--primary)" }} />
             <h2 style={{ fontSize: "18px", fontWeight: "800", color: "#fff" }}>
@@ -99,7 +106,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             marginBottom: "16px",
           }}
         >
-          <ShieldCheck size={18} style={{ color: apiConfigured ? "var(--primary)" : "var(--accent-cyan)" }} />
+          <ShieldCheck
+            size={18}
+            style={{ color: apiConfigured ? "var(--primary)" : "var(--accent-cyan)" }}
+          />
           <div style={{ fontSize: "12.5px" }}>
             <span style={{ fontWeight: "700", color: "#fff" }}>
               {apiConfigured ? "Active: Spotify Developer API" : "Mode: Public Embed Scraping"}
@@ -112,15 +122,34 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           </div>
         </div>
 
-        <p style={{ fontSize: "13px", color: "var(--text-muted)", lineHeight: 1.5, marginBottom: "20px" }}>
+        <p
+          style={{
+            fontSize: "13px",
+            color: "var(--text-muted)",
+            lineHeight: 1.5,
+            marginBottom: "20px",
+          }}
+        >
           By default, SpotFlow uses public embed scraping (capped at 100 songs). Adding your free{" "}
-          <strong style={{ color: "#fff" }}>Spotify Developer API keys</strong> enables unlimited pagination to extract and download playlists with{" "}
+          <strong style={{ color: "#fff" }}>Spotify Developer API keys</strong> enables unlimited
+          pagination to extract and download playlists with{" "}
           <strong style={{ color: "var(--primary)" }}>1,000+ tracks</strong>!
         </p>
 
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", flexDirection: "column", gap: "14px" }}
+        >
           <div>
-            <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px", fontWeight: "600" }}>
+            <label
+              style={{
+                display: "block",
+                fontSize: "12px",
+                color: "var(--text-muted)",
+                marginBottom: "6px",
+                fontWeight: "600",
+              }}
+            >
               Spotify Client ID
             </label>
             <input
@@ -135,7 +164,15 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px", fontWeight: "600" }}>
+            <label
+              style={{
+                display: "block",
+                fontSize: "12px",
+                color: "var(--text-muted)",
+                marginBottom: "6px",
+                fontWeight: "600",
+              }}
+            >
               Spotify Client Secret
             </label>
             <input
@@ -149,20 +186,37 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             />
           </div>
 
-          <div style={{ fontSize: "12px", color: "var(--text-dim)", display: "flex", alignItems: "center", gap: "6px", marginTop: "4px" }}>
+          <div
+            style={{
+              fontSize: "12px",
+              color: "var(--text-dim)",
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              marginTop: "4px",
+            }}
+          >
             <span>Keys are 100% free at</span>
             <a
               href="https://developer.spotify.com/dashboard"
               target="_blank"
               rel="noreferrer"
-              style={{ color: "var(--primary)", textDecoration: "underline", display: "inline-flex", alignItems: "center", gap: "2px" }}
+              style={{
+                color: "var(--primary)",
+                textDecoration: "underline",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "2px",
+              }}
             >
               <span>developer.spotify.com/dashboard</span>
               <ExternalLink size={11} />
             </a>
           </div>
 
-          <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "16px" }}>
+          <div
+            style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "16px" }}
+          >
             <button type="button" onClick={onClose} className="btn btn-secondary btn-sm">
               Cancel
             </button>

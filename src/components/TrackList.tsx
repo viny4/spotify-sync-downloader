@@ -94,7 +94,13 @@ export const TrackList: React.FC<TrackListProps> = ({
               }}
             >
               {/* Index */}
-              <div style={{ fontSize: "13px", color: "var(--text-dim)", fontFamily: "'JetBrains Mono', monospace" }}>
+              <div
+                style={{
+                  fontSize: "13px",
+                  color: "var(--text-dim)",
+                  fontFamily: "'JetBrains Mono', monospace",
+                }}
+              >
                 {index + 1}
               </div>
 
@@ -141,7 +147,14 @@ export const TrackList: React.FC<TrackListProps> = ({
 
               {/* Title & Artist */}
               <div style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                <div style={{ fontSize: "14px", fontWeight: "600", color: "#fff", marginBottom: "2px" }}>
+                <div
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "600",
+                    color: "#fff",
+                    marginBottom: "2px",
+                  }}
+                >
                   {track.title}
                 </div>
                 <div style={{ fontSize: "12.5px", color: "var(--text-muted)" }}>
@@ -163,22 +176,34 @@ export const TrackList: React.FC<TrackListProps> = ({
               {/* Status Badge */}
               <div>
                 {status === "completed" ? (
-                  <span className="badge badge-green" style={{ fontSize: "11px", padding: "3px 8px" }}>
+                  <span
+                    className="badge badge-green"
+                    style={{ fontSize: "11px", padding: "3px 8px" }}
+                  >
                     <Check size={12} />
                     <span>Done</span>
                   </span>
                 ) : status === "downloading" ? (
-                  <span className="badge badge-cyan" style={{ fontSize: "11px", padding: "3px 8px" }}>
+                  <span
+                    className="badge badge-cyan"
+                    style={{ fontSize: "11px", padding: "3px 8px" }}
+                  >
                     <div className="spinner" style={{ width: "10px", height: "10px" }} />
                     <span>{pct ? `${Math.round(pct)}%` : "Downloading"}</span>
                   </span>
                 ) : status === "searching" ? (
-                  <span className="badge badge-purple" style={{ fontSize: "11px", padding: "3px 8px" }}>
+                  <span
+                    className="badge badge-purple"
+                    style={{ fontSize: "11px", padding: "3px 8px" }}
+                  >
                     <div className="spinner" style={{ width: "10px", height: "10px" }} />
                     <span>Matching</span>
                   </span>
                 ) : status === "tagging" ? (
-                  <span className="badge badge-amber" style={{ fontSize: "11px", padding: "3px 8px" }}>
+                  <span
+                    className="badge badge-amber"
+                    style={{ fontSize: "11px", padding: "3px 8px" }}
+                  >
                     <div className="spinner" style={{ width: "10px", height: "10px" }} />
                     <span>Tagging</span>
                   </span>
@@ -218,7 +243,9 @@ export const TrackList: React.FC<TrackListProps> = ({
               <div style={{ textAlign: "right" }}>
                 <button
                   onClick={() => onDownloadSingle(track)}
-                  disabled={status === "downloading" || status === "searching" || status === "tagging"}
+                  disabled={
+                    status === "downloading" || status === "searching" || status === "tagging"
+                  }
                   className="btn btn-secondary btn-sm"
                   style={{
                     padding: "6px 8px",

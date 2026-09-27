@@ -1,11 +1,25 @@
 import React, { useState } from "react";
-import { Clock, Plus, Play, Pause, Trash2, CheckCircle2, AlertTriangle, RefreshCw } from "lucide-react";
+import {
+  Clock,
+  Plus,
+  Play,
+  Pause,
+  Trash2,
+  CheckCircle2,
+  AlertTriangle,
+  RefreshCw,
+} from "lucide-react";
 import type { CronJob, SyncLog } from "../types";
 
 interface CronsManagerProps {
   jobs: CronJob[];
   history: SyncLog[];
-  onAddJob: (job: { name: string; url: string; cronExpr: string; quality: number }) => Promise<void>;
+  onAddJob: (job: {
+    name: string;
+    url: string;
+    cronExpr: string;
+    quality: number;
+  }) => Promise<void>;
   onToggleJob: (id: string) => Promise<void>;
   onDeleteJob: (id: string) => Promise<void>;
   onRunNow: (id: string) => Promise<void>;
@@ -92,7 +106,9 @@ export const CronsManager: React.FC<CronsManagerProps> = ({
             </h2>
           </div>
           <p style={{ fontSize: "13.5px", color: "var(--text-muted)", maxWidth: "700px" }}>
-            Set periodic cron schedules for your favorite playlists. The Bun background engine periodically scans Spotify, detects newly added tracks, and automatically downloads only the new additions without re-downloading existing songs.
+            Set periodic cron schedules for your favorite playlists. The Bun background engine
+            periodically scans Spotify, detects newly added tracks, and automatically downloads only
+            the new additions without re-downloading existing songs.
           </p>
         </div>
 
@@ -137,7 +153,15 @@ export const CronsManager: React.FC<CronsManagerProps> = ({
             }}
           >
             <div>
-              <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px", fontWeight: "600" }}>
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "12px",
+                  color: "var(--text-muted)",
+                  marginBottom: "6px",
+                  fontWeight: "600",
+                }}
+              >
                 Schedule Name
               </label>
               <input
@@ -152,7 +176,15 @@ export const CronsManager: React.FC<CronsManagerProps> = ({
             </div>
 
             <div>
-              <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px", fontWeight: "600" }}>
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "12px",
+                  color: "var(--text-muted)",
+                  marginBottom: "6px",
+                  fontWeight: "600",
+                }}
+              >
                 Spotify Playlist URL
               </label>
               <input
@@ -167,7 +199,15 @@ export const CronsManager: React.FC<CronsManagerProps> = ({
             </div>
 
             <div>
-              <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px", fontWeight: "600" }}>
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "12px",
+                  color: "var(--text-muted)",
+                  marginBottom: "6px",
+                  fontWeight: "600",
+                }}
+              >
                 Sync Frequency
               </label>
               <select
@@ -186,7 +226,15 @@ export const CronsManager: React.FC<CronsManagerProps> = ({
 
             {preset === "custom" && (
               <div>
-                <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px", fontWeight: "600" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "12px",
+                    color: "var(--text-muted)",
+                    marginBottom: "6px",
+                    fontWeight: "600",
+                  }}
+                >
                   Custom Cron Expression (min hour day month dow)
                 </label>
                 <input
@@ -202,7 +250,15 @@ export const CronsManager: React.FC<CronsManagerProps> = ({
             )}
 
             <div>
-              <label style={{ display: "block", fontSize: "12px", color: "var(--text-muted)", marginBottom: "6px", fontWeight: "600" }}>
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "12px",
+                  color: "var(--text-muted)",
+                  marginBottom: "6px",
+                  fontWeight: "600",
+                }}
+              >
                 Audio Bitrate
               </label>
               <select
@@ -211,14 +267,22 @@ export const CronsManager: React.FC<CronsManagerProps> = ({
                 value={quality}
                 onChange={(e) => setQuality(parseInt(e.target.value, 10))}
               >
-                <option value="320" style={{ background: "#0f1422" }}>320 kbps (Extreme Quality)</option>
-                <option value="256" style={{ background: "#0f1422" }}>256 kbps (High Quality)</option>
-                <option value="192" style={{ background: "#0f1422" }}>192 kbps (Standard)</option>
+                <option value="320" style={{ background: "#0f1422" }}>
+                  320 kbps (Extreme Quality)
+                </option>
+                <option value="256" style={{ background: "#0f1422" }}>
+                  256 kbps (High Quality)
+                </option>
+                <option value="192" style={{ background: "#0f1422" }}>
+                  192 kbps (Standard)
+                </option>
               </select>
             </div>
           </div>
 
-          <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "10px" }}>
+          <div
+            style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "10px" }}
+          >
             <button
               type="button"
               onClick={() => setShowAddForm(false)}
@@ -226,11 +290,7 @@ export const CronsManager: React.FC<CronsManagerProps> = ({
             >
               Cancel
             </button>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="btn btn-primary btn-sm"
-            >
+            <button type="submit" disabled={isSubmitting} className="btn btn-primary btn-sm">
               {isSubmitting ? "Saving..." : "Create Schedule"}
             </button>
           </div>
@@ -253,7 +313,8 @@ export const CronsManager: React.FC<CronsManagerProps> = ({
               fontSize: "14px",
             }}
           >
-            No scheduled sync tasks yet. Click <b>"Add New Schedule"</b> above to schedule periodic playlist syncing.
+            No scheduled sync tasks yet. Click <b>"Add New Schedule"</b> above to schedule periodic
+            playlist syncing.
           </div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
@@ -273,7 +334,14 @@ export const CronsManager: React.FC<CronsManagerProps> = ({
                     gap: "16px",
                   }}
                 >
-                  <div style={{ display: "flex", flexDirection: "column", gap: "4px", maxWidth: "600px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "4px",
+                      maxWidth: "600px",
+                    }}
+                  >
                     <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                       <span style={{ fontSize: "16px", fontWeight: "700", color: "#fff" }}>
                         {job.name}
@@ -314,16 +382,35 @@ export const CronsManager: React.FC<CronsManagerProps> = ({
                       {job.url}
                     </a>
 
-                    <div style={{ fontSize: "12px", color: "var(--text-muted)", marginTop: "4px", display: "flex", gap: "12px", flexWrap: "wrap" }}>
+                    <div
+                      style={{
+                        fontSize: "12px",
+                        color: "var(--text-muted)",
+                        marginTop: "4px",
+                        display: "flex",
+                        gap: "12px",
+                        flexWrap: "wrap",
+                      }}
+                    >
                       {job.nextRun && (
                         <span>
-                          Next Run: <b style={{ color: "#fff" }}>{new Date(job.nextRun).toLocaleTimeString()}</b>
+                          Next Run:{" "}
+                          <b style={{ color: "#fff" }}>
+                            {new Date(job.nextRun).toLocaleTimeString()}
+                          </b>
                         </span>
                       )}
                       {job.lastRun && (
                         <span>
                           Last Run: {new Date(job.lastRun).toLocaleTimeString()} (
-                          <span style={{ color: job.lastRunStatus === "success" ? "var(--primary)" : "var(--accent-rose)" }}>
+                          <span
+                            style={{
+                              color:
+                                job.lastRunStatus === "success"
+                                  ? "var(--primary)"
+                                  : "var(--accent-rose)",
+                            }}
+                          >
                             {job.lastRunStatus}
                           </span>
                           )
@@ -412,7 +499,13 @@ export const CronsManager: React.FC<CronsManagerProps> = ({
                   <span style={{ fontWeight: "600", color: "#fff" }}>{log.jobName}</span>
                   <span style={{ color: "var(--text-muted)" }}>{log.message}</span>
                 </div>
-                <span style={{ color: "var(--text-dim)", fontFamily: "'JetBrains Mono', monospace", fontSize: "11px" }}>
+                <span
+                  style={{
+                    color: "var(--text-dim)",
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: "11px",
+                  }}
+                >
                   {new Date(log.timestamp).toLocaleTimeString()}
                 </span>
               </div>

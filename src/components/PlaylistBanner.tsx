@@ -137,7 +137,11 @@ export const PlaylistBanner: React.FC<PlaylistBannerProps> = ({
           </button>
 
           {selectedCount > 0 && selectedCount !== totalCount && (
-            <button onClick={onDownloadSelected} className="btn btn-secondary" style={{ width: "100%" }}>
+            <button
+              onClick={onDownloadSelected}
+              className="btn btn-secondary"
+              style={{ width: "100%" }}
+            >
               <Download size={14} />
               <span>Download Selected ({selectedCount})</span>
             </button>
@@ -162,7 +166,11 @@ export const PlaylistBanner: React.FC<PlaylistBannerProps> = ({
             onClick={isAllSelected ? onDeselectAll : onSelectAll}
             className="btn btn-secondary btn-sm"
           >
-            {isAllSelected ? <CheckSquare size={14} style={{ color: "var(--primary)" }} /> : <Square size={14} />}
+            {isAllSelected ? (
+              <CheckSquare size={14} style={{ color: "var(--primary)" }} />
+            ) : (
+              <Square size={14} />
+            )}
             <span>{isAllSelected ? "Deselect All" : "Select All"}</span>
           </button>
           <span style={{ fontSize: "12px", color: "var(--text-dim)" }}>
@@ -201,7 +209,13 @@ export const PlaylistBanner: React.FC<PlaylistBannerProps> = ({
           {filterText && (
             <button
               onClick={() => setFilterText("")}
-              style={{ background: "none", border: "none", color: "var(--text-dim)", cursor: "pointer", fontSize: "12px" }}
+              style={{
+                background: "none",
+                border: "none",
+                color: "var(--text-dim)",
+                cursor: "pointer",
+                fontSize: "12px",
+              }}
             >
               ✕
             </button>

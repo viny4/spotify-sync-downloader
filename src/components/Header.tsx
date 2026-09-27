@@ -63,7 +63,14 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <span style={{ fontSize: "22px", fontWeight: "800", letterSpacing: "-0.5px", color: "#fff" }}>
+              <span
+                style={{
+                  fontSize: "22px",
+                  fontWeight: "800",
+                  letterSpacing: "-0.5px",
+                  color: "#fff",
+                }}
+              >
                 Spot<span style={{ color: "var(--primary)" }}>Flow</span>
               </span>
               <span

@@ -41,5 +41,11 @@ jobs:
       - name: Run tests
         run: node --test tests/*.test.mjs
 
+      - name: Lint code
+        run: npx eslint . --ext .ts,.tsx,.js,.jsx
+
+      - name: Check formatting
+        run: npx prettier --check .
+
       - name: Build frontend
         run: bun run build

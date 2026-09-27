@@ -7,13 +7,22 @@ import { CronsManager } from "./components/CronsManager";
 import { LibraryDrawer } from "./components/LibraryDrawer";
 import { SettingsModal } from "./components/SettingsModal";
 import { Toast, type ToastMessage } from "./components/Toast";
-import type { PlaylistInfo, Track, DownloadProgress, DownloadedFile, CronJob, SyncLog } from "./types";
+import type {
+  PlaylistInfo,
+  Track,
+  DownloadProgress,
+  DownloadedFile,
+  CronJob,
+  SyncLog,
+} from "./types";
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"studio" | "crons" | "library">("studio");
   const [playlist, setPlaylist] = useState<PlaylistInfo | null>(null);
   const [selectedTrackIds, setSelectedTrackIds] = useState<Set<string>>(new Set());
-  const [downloadStatuses, setDownloadStatuses] = useState<Map<string, DownloadProgress>>(new Map());
+  const [downloadStatuses, setDownloadStatuses] = useState<Map<string, DownloadProgress>>(
+    new Map()
+  );
   const [files, setFiles] = useState<DownloadedFile[]>([]);
   const [cronJobs, setCronJobs] = useState<CronJob[]>([]);
   const [cronHistory, setCronHistory] = useState<SyncLog[]>([]);
@@ -44,7 +53,9 @@ export const App: React.FC = () => {
       if (data.files) {
         setFiles(data.files);
       }
-    } catch {}
+    } catch (error) {
+      console.warn("Failed to load files:", error);
+    }
   }, []);
 
   const loadConfig = useCallback(async () => {
@@ -52,7 +63,9 @@ export const App: React.FC = () => {
       const res = await fetch("/api/config");
       const data = await res.json();
       setApiConfig(data);
-    } catch {}
+    } catch (error) {
+      console.warn("Failed to load config:", error);
+    }
   }, []);
 
   const loadCrons = useCallback(async () => {
@@ -61,7 +74,9 @@ export const App: React.FC = () => {
       const data = await res.json();
       if (data.jobs) setCronJobs(data.jobs);
       if (data.history) setCronHistory(data.history);
-    } catch {}
+    } catch (error) {
+      console.warn("Failed to load cron jobs:", error);
+    }
   }, []);
 
   // Connect to SSE for real-time progress
@@ -134,7 +149,9 @@ export const App: React.FC = () => {
       }
 
       setPlaylist(data.info);
-      const allIds = new Set<string>((data.info.tracks || []).map((t: Track) => t.id || `${t.artist}_${t.title}`));
+      const allIds = new Set<string>(
+        (data.info.tracks || []).map((t: Track) => t.id || `${t.artist}_${t.title}`)
+      );
       setSelectedTrackIds(allIds);
       setFilterText("");
       showToast(`Loaded ${data.info.tracks?.length || 0} track(s)!`, "success");
@@ -209,7 +226,9 @@ export const App: React.FC = () => {
     try {
       await fetch("/api/open-folder", { method: "POST" });
       showToast("Opened downloads folder", "info");
-    } catch {}
+    } catch (error) {
+      console.warn("Failed to open downloads folder:", error);
+    }
   };
 
   // Save Spotify API Config
@@ -236,7 +255,12 @@ export const App: React.FC = () => {
   };
 
   // Crons Handlers
-  const handleAddCronJob = async (config: { name: string; url: string; cronExpr: string; quality: number }) => {
+  const handleAddCronJob = async (config: {
+    name: string;
+    url: string;
+    cronExpr: string;
+    quality: number;
+  }) => {
     try {
       const res = await fetch("/api/crons", {
         method: "POST",
@@ -259,7 +283,9 @@ export const App: React.FC = () => {
     try {
       await fetch(`/api/crons/${id}/toggle`, { method: "POST" });
       loadCrons();
-    } catch {}
+    } catch (error) {
+      console.warn("Failed to toggle cron job:", error);
+    }
   };
 
   const handleDeleteCronJob = async (id: string) => {
@@ -267,7 +293,9 @@ export const App: React.FC = () => {
       await fetch(`/api/crons/${id}`, { method: "DELETE" });
       showToast("Schedule removed", "info");
       loadCrons();
-    } catch {}
+    } catch (error) {
+      console.warn("Failed to delete cron job:", error);
+    }
   };
 
   const handleRunCronNow = async (id: string) => {
@@ -377,11 +405,7 @@ export const App: React.FC = () => {
       )}
 
       {activeTab === "library" && (
-        <LibraryDrawer
-          files={files}
-          onRefresh={loadFiles}
-          onOpenFolder={handleOpenFolder}
-        />
+        <LibraryDrawer files={files} onRefresh={loadFiles} onOpenFolder={handleOpenFolder} />
       )}
 
       {/* API Settings Modal */}

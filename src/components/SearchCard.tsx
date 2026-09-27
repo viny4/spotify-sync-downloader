@@ -27,7 +27,9 @@ export const SearchCard: React.FC<SearchCardProps> = ({ onFetch, isLoading }) =>
       if (cleaned) {
         setUrl(cleaned);
       }
-    } catch {}
+    } catch (error) {
+      console.warn("Clipboard access failed:", error);
+    }
   };
 
   return (
@@ -57,11 +59,15 @@ export const SearchCard: React.FC<SearchCardProps> = ({ onFetch, isLoading }) =>
           Download Spotify Playlists, Albums & Tracks
         </h1>
         <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: 1.5 }}>
-          Paste any Spotify link below. SpotFlow extracts all tracks, streams high-definition 320 kbps audio, and embeds ID3 tags with full album artwork.
+          Paste any Spotify link below. SpotFlow extracts all tracks, streams high-definition 320
+          kbps audio, and embeds ID3 tags with full album artwork.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: "flex", flexDirection: "column", gap: "14px" }}
+      >
         <div
           style={{
             display: "flex",
@@ -162,10 +168,18 @@ export const SearchCard: React.FC<SearchCardProps> = ({ onFetch, isLoading }) =>
                 cursor: "pointer",
               }}
             >
-              <option value="320" style={{ background: "#0f1422" }}>320 kbps (Extreme)</option>
-              <option value="256" style={{ background: "#0f1422" }}>256 kbps (High)</option>
-              <option value="192" style={{ background: "#0f1422" }}>192 kbps (Standard)</option>
-              <option value="128" style={{ background: "#0f1422" }}>128 kbps (Compact)</option>
+              <option value="320" style={{ background: "#0f1422" }}>
+                320 kbps (Extreme)
+              </option>
+              <option value="256" style={{ background: "#0f1422" }}>
+                256 kbps (High)
+              </option>
+              <option value="192" style={{ background: "#0f1422" }}>
+                192 kbps (Standard)
+              </option>
+              <option value="128" style={{ background: "#0f1422" }}>
+                128 kbps (Compact)
+              </option>
             </select>
           </div>
 
