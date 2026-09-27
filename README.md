@@ -15,7 +15,9 @@ A local web app to browse, download, and auto-sync Spotify playlists and albums 
 - ⏱️ **Cron scheduler** — auto-sync playlists on a schedule
 - 🔄 **Incremental sync** — only downloads new/missing tracks
 - ⚙️ **Settings panel** — configure Spotify API keys and download quality
-- 📡 **Real-time progress** via WebSocket
+- 📡 **Real-time progress** via Server-Sent Events (SSE)
+- 🧪 **Validation checks** — URL and quality inputs are sanitized before use
+- 🔒 **Safer config handling** — API credentials are required to save settings
 
 ---
 
