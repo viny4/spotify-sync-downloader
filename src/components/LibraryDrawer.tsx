@@ -72,12 +72,22 @@ export const LibraryDrawer: React.FC<LibraryDrawerProps> = ({ files, onRefresh, 
         }}
       >
         <div>
-          <h2 style={{ fontSize: "18px", fontWeight: "700", color: "#fff", display: "flex", alignItems: "center", gap: "8px" }}>
+          <h2
+            style={{
+              fontSize: "18px",
+              fontWeight: "700",
+              color: "#fff",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
             <Music size={18} style={{ color: "var(--primary)" }} />
             <span>Local Music Library ({files.length} MP3s)</span>
           </h2>
           <p style={{ fontSize: "12.5px", color: "var(--text-muted)", marginTop: "2px" }}>
-            High-definition 320 kbps MP3 files saved locally in your <code>./downloads</code> folder.
+            High-definition 320 kbps MP3 files saved locally in your <code>./downloads</code>{" "}
+            folder.
           </p>
         </div>
 
@@ -123,14 +133,28 @@ export const LibraryDrawer: React.FC<LibraryDrawerProps> = ({ files, onRefresh, 
               flexShrink: 0,
             }}
           >
-            {isPlaying ? <Pause size={18} fill="#000" /> : <Play size={18} fill="#000" style={{ marginLeft: "2px" }} />}
+            {isPlaying ? (
+              <Pause size={18} fill="#000" />
+            ) : (
+              <Play size={18} fill="#000" style={{ marginLeft: "2px" }} />
+            )}
           </button>
 
           <div style={{ flex: "1 1 200px" }}>
-            <div style={{ fontSize: "14px", fontWeight: "700", color: "#fff", marginBottom: "4px" }}>
+            <div
+              style={{ fontSize: "14px", fontWeight: "700", color: "#fff", marginBottom: "4px" }}
+            >
               {currentFile.name.replace(".mp3", "")}
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "11px", color: "var(--text-dim)" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                fontSize: "11px",
+                color: "var(--text-dim)",
+              }}
+            >
               <span>{formatSeconds(currentTime)}</span>
               <input
                 type="range"
@@ -144,7 +168,15 @@ export const LibraryDrawer: React.FC<LibraryDrawerProps> = ({ files, onRefresh, 
             </div>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "var(--text-dim)", fontSize: "12px" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              color: "var(--text-dim)",
+              fontSize: "12px",
+            }}
+          >
             <Volume2 size={16} />
             <span>Streaming Local MP3</span>
           </div>
@@ -169,7 +201,8 @@ export const LibraryDrawer: React.FC<LibraryDrawerProps> = ({ files, onRefresh, 
               fontSize: "14px",
             }}
           >
-            No downloaded MP3 files found yet. Use the <b>Downloader Studio</b> to fetch and download tracks!
+            No downloaded MP3 files found yet. Use the <b>Downloader Studio</b> to fetch and
+            download tracks!
           </div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column" }}>
@@ -196,7 +229,8 @@ export const LibraryDrawer: React.FC<LibraryDrawerProps> = ({ files, onRefresh, 
                         width: "32px",
                         height: "32px",
                         borderRadius: "50%",
-                        background: isCurrent && isPlaying ? "var(--primary)" : "rgba(255,255,255,0.08)",
+                        background:
+                          isCurrent && isPlaying ? "var(--primary)" : "rgba(255,255,255,0.08)",
                         color: isCurrent && isPlaying ? "#000" : "#fff",
                         border: "none",
                         cursor: "pointer",
@@ -215,11 +249,20 @@ export const LibraryDrawer: React.FC<LibraryDrawerProps> = ({ files, onRefresh, 
                     </button>
 
                     <div>
-                      <div style={{ fontSize: "13.5px", fontWeight: "600", color: isCurrent ? "var(--primary)" : "#fff" }}>
+                      <div
+                        style={{
+                          fontSize: "13.5px",
+                          fontWeight: "600",
+                          color: isCurrent ? "var(--primary)" : "#fff",
+                        }}
+                      >
                         {file.name}
                       </div>
-                      <div style={{ fontSize: "11.5px", color: "var(--text-dim)", marginTop: "1px" }}>
-                        Saved: {new Date(file.modified).toLocaleDateString()} at {new Date(file.modified).toLocaleTimeString()}
+                      <div
+                        style={{ fontSize: "11.5px", color: "var(--text-dim)", marginTop: "1px" }}
+                      >
+                        Saved: {new Date(file.modified).toLocaleDateString()} at{" "}
+                        {new Date(file.modified).toLocaleTimeString()}
                       </div>
                     </div>
                   </div>

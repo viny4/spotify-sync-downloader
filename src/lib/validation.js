@@ -5,7 +5,8 @@ export function sanitizeSpotifyUrl(value) {
   if (!trimmed) return "";
 
   const withoutQuery = trimmed.split("?")[0].replace(/\/+$/, "");
-  const spotifyPattern = /^(https?:\/\/)?(open\.spotify\.com\/(playlist|album|track)\/[A-Za-z0-9]+|spotify:(playlist|album|track):[A-Za-z0-9]+)$/i;
+  const spotifyPattern =
+    /^(https?:\/\/)?(open\.spotify\.com\/(playlist|album|track)\/[A-Za-z0-9]+|spotify:(playlist|album|track):[A-Za-z0-9]+)$/i;
 
   if (!spotifyPattern.test(withoutQuery)) {
     return "";

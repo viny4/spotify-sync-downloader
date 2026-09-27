@@ -177,11 +177,18 @@ const server = Bun.serve({
         if (!spotifyUrl) {
           return jsonResponse({ success: false, error: "Spotify URL is required" }, 400);
         }
-        const isValidSpotifyUrl = /^(https?:\/\/)?(open\.spotify\.com\/(playlist|album|track)\/[A-Za-z0-9]+|spotify:(playlist|album|track):[A-Za-z0-9]+)$/i.test(
-          spotifyUrl.split("?")[0].replace(/\/+$/, "")
-        );
+        const isValidSpotifyUrl =
+          /^(https?:\/\/)?(open\.spotify\.com\/(playlist|album|track)\/[A-Za-z0-9]+|spotify:(playlist|album|track):[A-Za-z0-9]+)$/i.test(
+            spotifyUrl.split("?")[0].replace(/\/+$/, "")
+          );
         if (!isValidSpotifyUrl) {
-          return jsonResponse({ success: false, error: "Please provide a valid Spotify playlist, album, or track URL." }, 400);
+          return jsonResponse(
+            {
+              success: false,
+              error: "Please provide a valid Spotify playlist, album, or track URL.",
+            },
+            400
+          );
         }
         const info = await fetchSpotifyInfo(spotifyUrl);
         return jsonResponse({ success: true, info });
@@ -202,7 +209,10 @@ const server = Bun.serve({
         }
 
         if (!Number.isFinite(quality) || quality < 128 || quality > 320) {
-          return jsonResponse({ success: false, error: "Quality must be a valid bitrate between 128 and 320 kbps." }, 400);
+          return jsonResponse(
+            { success: false, error: "Quality must be a valid bitrate between 128 and 320 kbps." },
+            400
+          );
         }
 
         // Initialize queue entries
@@ -251,7 +261,9 @@ const server = Bun.serve({
       if (fs.existsSync(CONFIG_FILE)) {
         try {
           cfg = JSON.parse(fs.readFileSync(CONFIG_FILE, "utf-8"));
-        } catch {}
+        } catch (error) {
+          console.warn("Failed to read config.json:", error);
+        }
       }
       const configured = Boolean(cfg.spotify_client_id && cfg.spotify_client_secret);
       const preview = cfg.spotify_client_id ? cfg.spotify_client_id.substring(0, 6) + "..." : "";
@@ -264,11 +276,18 @@ const server = Bun.serve({
         const clientId = String(body.client_id || "").trim();
         const clientSecret = String(body.client_secret || "").trim();
         if (!clientId || !clientSecret) {
-          return jsonResponse({ success: false, error: "Both Client ID and Client Secret are required." }, 400);
+          return jsonResponse(
+            { success: false, error: "Both Client ID and Client Secret are required." },
+            400
+          );
         }
         fs.writeFileSync(
           CONFIG_FILE,
-          JSON.stringify({ spotify_client_id: clientId, spotify_client_secret: clientSecret }, null, 2),
+          JSON.stringify(
+            { spotify_client_id: clientId, spotify_client_secret: clientSecret },
+            null,
+            2
+          ),
           "utf-8"
         );
         return jsonResponse({ success: true, message: "API credentials saved successfully!" });
@@ -327,7 +346,10 @@ const server = Bun.serve({
         const body = (await req.json()) as any;
         const { name, url: spotifyUrl, cronExpr, quality } = body;
         if (!name || !spotifyUrl || !cronExpr) {
-          return jsonResponse({ success: false, error: "Missing required cron fields (name, url, cronExpr)" }, 400);
+          return jsonResponse(
+            { success: false, error: "Missing required cron fields (name, url, cronExpr)" },
+            400
+          );
         }
         const job = cronService.addJob({
           name,
@@ -351,7 +373,11 @@ const server = Bun.serve({
       }
     }
 
-    if (pathname.startsWith("/api/crons/") && pathname.endsWith("/toggle") && req.method === "POST") {
+    if (
+      pathname.startsWith("/api/crons/") &&
+      pathname.endsWith("/toggle") &&
+      req.method === "POST"
+    ) {
       const id = pathname.replace("/api/crons/", "").replace("/toggle", "");
       const updated = cronService.toggleJob(id);
       if (updated) {
@@ -369,8 +395,8 @@ const server = Bun.serve({
     // Serve built static frontend files if production build exists
     const distDir = path.join(PROJECT_ROOT, "dist");
     if (fs.existsSync(distDir)) {
-      let relativePath = pathname === "/" ? "index.html" : pathname.slice(1);
-      let localPath = path.join(distDir, relativePath);
+      const relativePath = pathname === "/" ? "index.html" : pathname.slice(1);
+      const localPath = path.join(distDir, relativePath);
       if (fs.existsSync(localPath) && fs.statSync(localPath).isFile()) {
         return new Response(Bun.file(localPath));
       }

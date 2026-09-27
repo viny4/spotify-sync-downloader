@@ -186,7 +186,10 @@ export class CronService {
       // Check existing files in download folder to perform incremental sync (only download missing tracks)
       const existingFiles = new Set(
         fs.existsSync(DOWNLOAD_DIR)
-          ? fs.readdirSync(DOWNLOAD_DIR).filter((f) => f.endsWith(".mp3")).map((f) => f.toLowerCase())
+          ? fs
+              .readdirSync(DOWNLOAD_DIR)
+              .filter((f) => f.endsWith(".mp3"))
+              .map((f) => f.toLowerCase())
           : []
       );
 
@@ -194,11 +197,14 @@ export class CronService {
       for (const track of tracks) {
         const titleClean = (track.title || "").toLowerCase().replace(/[^a-z0-9]/g, "");
         const artistClean = (track.artist || "").toLowerCase().replace(/[^a-z0-9]/g, "");
-        
+
         let found = false;
         for (const file of existingFiles) {
           const fileClean = file.replace(/[^a-z0-9]/g, "");
-          if (fileClean.includes(titleClean) && (artistClean === "" || fileClean.includes(artistClean))) {
+          if (
+            fileClean.includes(titleClean) &&
+            (artistClean === "" || fileClean.includes(artistClean))
+          ) {
             found = true;
             break;
           }

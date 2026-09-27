@@ -45,8 +45,8 @@ export const Toast: React.FC<ToastProps> = ({ toasts, onDismiss }) => {
               toast.type === "success"
                 ? "var(--primary)"
                 : toast.type === "error"
-                ? "var(--accent-rose)"
-                : "var(--accent-cyan)"
+                  ? "var(--accent-rose)"
+                  : "var(--accent-cyan)"
             }`,
             boxShadow: "0 10px 30px rgba(0, 0, 0, 0.6)",
             color: "#fff",

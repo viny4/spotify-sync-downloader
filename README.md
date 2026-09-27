@@ -23,12 +23,12 @@ A local web app to browse, download, and auto-sync Spotify playlists and albums 
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React + TypeScript + Vite |
-| Backend | Bun (TypeScript) |
-| Scraper | Python 3 (stdlib only, no dependencies) |
-| Scheduler | croner |
+| Layer     | Technology                              |
+| --------- | --------------------------------------- |
+| Frontend  | React + TypeScript + Vite               |
+| Backend   | Bun (TypeScript)                        |
+| Scraper   | Python 3 (stdlib only, no dependencies) |
+| Scheduler | croner                                  |
 
 ---
 
